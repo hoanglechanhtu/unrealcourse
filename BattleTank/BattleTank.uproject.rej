@@ -1,0 +1,16 @@
+diff a/BattleTank/BattleTank.uproject b/BattleTank/BattleTank.uproject	(rejected hunks)
+@@ -1,13 +0,0 @@
+-{
+-	"FileVersion": 3,
+-	"EngineAssociation": "4.15",
+-	"Category": "",
+-	"Description": "",
+-	"Modules": [
+-		{
+-			"Name": "BattleTank",
+-			"Type": "Runtime",
+-			"LoadingPhase": "Default"
+-		}
+-	]
+-}
+\ No newline at end of file
