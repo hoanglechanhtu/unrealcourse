@@ -62,6 +62,7 @@ Build/*/**
 # Don't ignore icon files in Build
 !Build/**/*.ico
 
+!Source
 # Built data for maps
 *_BuiltData.uasset
 
