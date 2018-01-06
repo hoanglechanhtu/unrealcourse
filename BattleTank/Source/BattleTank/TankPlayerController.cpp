@@ -2,7 +2,7 @@
 
 #include "BattleTank.h"
 
-
+#include "Tank.h"
 #include "TankPlayerController.h"
 
 
@@ -36,6 +36,7 @@ void ATankPlayerController::AimTowardCrosshair() {
 
 	FVector HitLocation; // Out parameter 
 
+	
 	//Get world location if linetrace through crosshair
 	// If it hits the landscape
 	// Tell controlled tank to aim at this
