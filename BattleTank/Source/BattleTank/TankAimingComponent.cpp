@@ -42,7 +42,7 @@ void UTankAimingComponent::AimAt(FVector HitLocation,float LaunchSpeed) {
 		FVector DesireAimDirection = TossVelocity.GetSafeNormal();
 		MoveBarrelToward(DesireAimDirection);
 		RotatorTurret(DesireAimDirection);
-		auto Time = GetWorld()->GetTimeSeconds();
+		
 		 
 	}
 	 
@@ -76,8 +76,8 @@ void UTankAimingComponent::MoveBarrelToward(FVector AimDirection) {
 
 
 void UTankAimingComponent::RotatorTurret(FVector AimDirection) {
-	auto Time = GetWorld()->GetTimeSeconds();
-	UE_LOG(LogTemp, Warning, TEXT("%f :Rotator"), Time);
+ 
+	
 	FRotator CurrrentTurretRotator = Turret->GetForwardVector().Rotation();
 	FRotator AimRotator = AimDirection.Rotation();
 
