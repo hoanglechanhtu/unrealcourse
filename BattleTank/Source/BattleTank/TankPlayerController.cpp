@@ -44,6 +44,7 @@ void ATankPlayerController::AimTowardCrosshair() {
 	if (GetSightRayHitLocation(HitLocation)) { // has side-effect, is going to line trace
 	
 		GetControlledTank()->AimAt(HitLocation);
+
 	}
 }
 
@@ -97,6 +98,7 @@ bool ATankPlayerController::GetLookVectorHitLocation(FVector LookDirection, FVec
 	) {
 		// if linetrace succeed
 		// set hitlocation
+	
 		HitLocation = HitResult.Location;
 		return true;
 	}

@@ -42,7 +42,8 @@ public:
 
 protected:
 
-	
+
+
 
 	UTankAimingComponent* TankAimingComponent = nullptr;
 
@@ -51,6 +52,12 @@ private:
 
 	UPROPERTY(EditAnywhere, Category = Firing)
 		float LaunchSpeed = 8000; //TODO find sensible value
+
+
+	UPROPERTY(EditDefaultsOnly)
+		float ReloadFireTime = 3;
+
+	float LastFireTime = 0;
 	//Local barrel to spawn projectile
 	UTankBarrel* Barrel = nullptr;
 	
