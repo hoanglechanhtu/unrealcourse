@@ -26,7 +26,8 @@ private:
 
 	bool GetLookVectorHitLocation(FVector LookDirection, FVector& HitLocation) const;
 public:
-	ATank* GetControlledTank() const;
+	UFUNCTION(BlueprintCallable, Category = "Setup")
+		ATank* GetControlledTank() const;
 
 
 	virtual void  BeginPlay() override;

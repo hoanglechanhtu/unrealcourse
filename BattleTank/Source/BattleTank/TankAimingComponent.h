@@ -5,6 +5,15 @@
 #include "Components/ActorComponent.h"
 #include "TankAimingComponent.generated.h"
 
+UENUM()
+enum class EFiringStatus : uint8 {
+	Reloading,
+	Aiming,
+	Locked
+
+
+};
+
 class UTankBarrel;
 class UTankTurret;
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
@@ -25,6 +34,8 @@ public:
 	UTankTurret* Turret = nullptr;
 protected:
 	 
+	UPROPERTY(BlueprintReadOnly,Category ="State")
+		EFiringStatus State = EFiringStatus::Reloading;
 
 	void MoveBarrelToward(FVector AimDirection);
 	void RotatorTurret(FVector AimDirection);
