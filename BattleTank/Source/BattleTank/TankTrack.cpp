@@ -15,8 +15,7 @@ How can we deal with friction
 
 void UTankTrack::SetThrottle(float Throttle) {
 	auto TrackName = GetName();
-	//auto Time = GetWorld()->GetTimeSeconds();
-	UE_LOG(LogTemp, Warning, TEXT("%s , this track throttle %f"), *TrackName,Throttle);
+	
 	//TODO clamp actual throttle value so player cant over drive
 	auto ForceApplied = GetForwardVector()*Throttle*TrackMaxDrivingForce;
 	auto ForceLocation = GetComponentLocation();

@@ -27,8 +27,8 @@ void ATankAIController::BeginPlay() {
 void ATankAIController::Tick(float DeltaTime) {
 	Super::Tick(DeltaTime);
 	if (GetPlayerControlledTank()) {
-		//TODO move toward the player
-
+		//  move toward the player
+		MoveToActor(GetPlayerControlledTank(), AcceptanceRadius); //TODO check radius is in cm
 		//Aimt toweard the player
 		GetControlledTank()->AimAt(GetPlayerControlledTank()->GetActorLocation());
 
