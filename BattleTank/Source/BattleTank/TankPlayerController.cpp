@@ -33,7 +33,7 @@ ATank* ATankPlayerController::GetControlledTank() const {
 
 void ATankPlayerController::AimTowardCrosshair() {
 	if (!GetControlledTank()) { return; }
-
+	UE_LOG(LogTemp, Warning, TEXT("Tank aim at called"));
 	FVector HitLocation; // Out parameter 
 
 	

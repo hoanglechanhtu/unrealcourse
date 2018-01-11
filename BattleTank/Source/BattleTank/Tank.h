@@ -34,20 +34,19 @@ public:
 	UFUNCTION(BlueprintCallable,Category = Setup)
 		void SetBarrelRef(UTankBarrel* BarrelToSet);
 
-	UFUNCTION(BlueprintCallable, Category = Setup)
-		void SetTurretRef(UTankTurret* TurretToSet);
-
+ 
 	UPROPERTY(EditAnywhere, Category = Setup)
 		TSubclassOf<AProjectile> BlueprintProjectile;
 
+	UPROPERTY(BlueprintReadOnly, Category = Setup)
+		UTankMovementComponent* TankMovementComponent = nullptr;
 
-protected:
-
-
-
-	UPROPERTY(BlueprintReadOnly,Category = Setup)
+	UPROPERTY(BlueprintReadOnly, Category = Setup)
 		UTankAimingComponent* TankAimingComponent = nullptr;
-	 
+
+	UFUNCTION(BlueprintCallable, Category = Setup)
+		void SetUpAimingComponent(UTankAimingComponent* TankAimingComponentToSet);
+ 
 
 private:
 
