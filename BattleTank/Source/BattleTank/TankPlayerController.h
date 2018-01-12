@@ -6,18 +6,26 @@
 #include "TankPlayerController.generated.h"
 #define OUT	//
 /**
- * 
+ * Responsible to helping the  player aim
  */
 
 class ATank;
+class UTankAimingComponent;
+
+
 UCLASS()
 class BATTLETANK_API ATankPlayerController : public APlayerController
 {
 	GENERATED_BODY()
-	
+		
+protected:
+	UFUNCTION(BlueprintCallable, Category = "Setup")
+		ATank* GetControlledTank() const;
+	UFUNCTION(BlueprintImplementableEvent, Category = "Setup")
+		void FoundAimingComponent(UTankAimingComponent* AimingCompRef);
 private:
 	
-
+	UTankAimingComponent* TankAimingComponent=nullptr;
 	void AimTowardCrosshair();
 	//Return an out parameter, true if hits landscape
 	bool GetSightRayHitLocation(FVector& OutHitLocation ) const;
@@ -26,8 +34,6 @@ private:
 
 	bool GetLookVectorHitLocation(FVector LookDirection, FVector& HitLocation) const;
 public:
-	UFUNCTION(BlueprintCallable, Category = "Setup")
-		ATank* GetControlledTank() const;
 
 
 	virtual void  BeginPlay() override;

@@ -12,7 +12,7 @@ UTankAimingComponent::UTankAimingComponent()
 	// Set this component to be initialized when the game starts, and to be ticked every frame.  You can turn these features
 	// off to improve performance if you don't need them.
 	PrimaryComponentTick.bCanEverTick = true; //TODO do we really need tick?
-
+	State= EFiringStatus::Aiming;
 	// ...
 }
 
@@ -20,7 +20,11 @@ UTankAimingComponent::UTankAimingComponent()
 
 
 void UTankAimingComponent::AimAt(FVector HitLocation,float LaunchSpeed) {
-	if (!Barrel) { return; }
+	if (!ensure(Barrel)) { 
+	 
+		return; 
+		
+	}
 	FVector TossVelocity;
 	FVector StartLocation = Barrel->GetSocketLocation(FName("Projectile"));
 	bool bHaveAimSolution = UGameplayStatics::SuggestProjectileVelocity(
@@ -57,6 +61,11 @@ void UTankAimingComponent::Initialise(UTankBarrel* BarrelToSet, UTankTurret* Tur
 
 void UTankAimingComponent::MoveBarrelToward(FVector AimDirection) {
 	// Workout difference bettween current barrel reaction and aimdirection
+	if (!ensure(Barrel)) { 
+
+		 
+		return;
+	}
 	FRotator CurrentBarrelRotator = Barrel->GetForwardVector().Rotation();
 	FRotator AimRotator = AimDirection.Rotation();
 	
@@ -72,6 +81,11 @@ void UTankAimingComponent::MoveBarrelToward(FVector AimDirection) {
 
 void UTankAimingComponent::RotatorTurret(FVector AimDirection) {
  
+	if (!ensure(Turret)) {
+	 
+		return;
+	
+	}
 	
 	FRotator CurrrentTurretRotator = Turret->GetForwardVector().Rotation();
 	FRotator AimRotator = AimDirection.Rotation();

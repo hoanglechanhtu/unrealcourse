@@ -6,9 +6,10 @@
 #include "TankAIController.generated.h"
 
 /**
- * 
+ * Help AI tank to find path to player tank
  */
 class ATank;
+class UTankAimingComponent;
 
 UCLASS()
 class BATTLETANK_API ATankAIController : public AAIController
@@ -19,6 +20,8 @@ public:
 	virtual void BeginPlay() override;
 	virtual void Tick(float DeltaTime) override;
 private:
+
+	UTankAimingComponent* TankAimingComponent = nullptr;
 
 	ATank* GetControlledTank() const;
 	ATank* GetPlayerControlledTank() const;

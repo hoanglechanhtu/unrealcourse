@@ -36,8 +36,8 @@ public:
 	UTankTurret* Turret = nullptr;
 protected:
 	 
-	UPROPERTY(BlueprintReadOnly,Category ="State")
-		EFiringStatus State = EFiringStatus::Reloading;
+	UPROPERTY(BlueprintReadOnly, Category = "State")
+		EFiringStatus State;
 
 	void MoveBarrelToward(FVector AimDirection);
 	void RotatorTurret(FVector AimDirection);

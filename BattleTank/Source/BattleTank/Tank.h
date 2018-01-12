@@ -7,11 +7,11 @@
 
 #include "Tank.generated.h"
 
-class UTankAimingComponent;
+ 
 class UTankTurret;
 class UTankBarrel;
 class AProjectile;
-class UTankMovementComponent;
+ 
  
 UCLASS()
 class BATTLETANK_API ATank : public APawn
@@ -38,14 +38,10 @@ public:
 	UPROPERTY(EditAnywhere, Category = Setup)
 		TSubclassOf<AProjectile> BlueprintProjectile;
 
-	UPROPERTY(BlueprintReadOnly, Category = Setup)
-		UTankMovementComponent* TankMovementComponent = nullptr;
+ 
+ 
 
-	UPROPERTY(BlueprintReadOnly, Category = Setup)
-		UTankAimingComponent* TankAimingComponent = nullptr;
-
-	UFUNCTION(BlueprintCallable, Category = Setup)
-		void SetUpAimingComponent(UTankAimingComponent* TankAimingComponentToSet);
+	float GetLaunchSpeed() { return LaunchSpeed; }
  
 
 private:

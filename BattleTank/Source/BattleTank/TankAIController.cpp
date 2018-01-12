@@ -2,39 +2,31 @@
 
 #include "BattleTank.h"
 #include "Tank.h"
+#include "TankAimingComponent.h"
 #include "TankAIController.h"
 
 
 void ATankAIController::BeginPlay() {
 	Super::BeginPlay();
-	auto ControlledTank = GetControlledTank();
-	if (!ControlledTank) {	
-		UE_LOG(LogTemp, Warning, TEXT("TankAIController no possesing tank"));
-	}
-	else {
-		UE_LOG(LogTemp, Warning, TEXT("Controlled Tank : %s"), *(ControlledTank->GetName()));
-	}
-	
-	auto PlayerTank = GetPlayerControlledTank();
-	if (!PlayerTank) {
-		UE_LOG(LogTemp, Warning, TEXT("Cant find player tank"));
-	}
-	else {
-		UE_LOG(LogTemp, Warning, TEXT("Player Controlled Tank : %s"), *(PlayerTank->GetName()));
-	}
+	TankAimingComponent = GetControlledTank()->FindComponentByClass<UTankAimingComponent>();
 }
 
 void ATankAIController::Tick(float DeltaTime) {
 	Super::Tick(DeltaTime);
-	if (GetPlayerControlledTank()) {
-		//  move toward the player
-		MoveToActor(GetPlayerControlledTank(), AcceptanceRadius); //TODO check radius is in cm
-		//Aimt toweard the player
-		GetControlledTank()->AimAt(GetPlayerControlledTank()->GetActorLocation());
-
-		//TODO fire if ready
-		GetControlledTank()->Fire();
+	auto PlayerTank = GetPlayerControlledTank();
+	if (!ensure(PlayerTank)) {
+		return;
 	}
+	//  move toward the player
+	MoveToActor(PlayerTank, AcceptanceRadius); //TODO check radius is in cm
+	//Aimt toweard the player
+	if (!ensure(TankAimingComponent)) { return; }
+	 
+	TankAimingComponent->AimAt(PlayerTank->GetActorLocation(),PlayerTank->GetLaunchSpeed());
+
+	//TODO fire if ready
+	GetControlledTank()->Fire();
+	
 }
 ATank* ATankAIController::GetControlledTank() const {
 	return Cast<ATank>(GetPawn());
@@ -45,8 +37,8 @@ ATank* ATankAIController::GetControlledTank() const {
 ATank* ATankAIController::GetPlayerControlledTank() const {
 	auto PlayerController = GetWorld()->GetFirstPlayerController();
 
-	if (!PlayerController) {
-		UE_LOG(LogTemp, Warning, TEXT("Cant find PlayerController"));
+	if (!ensure(PlayerController)) {
+		 
 		return nullptr;
 	}
 	else {
