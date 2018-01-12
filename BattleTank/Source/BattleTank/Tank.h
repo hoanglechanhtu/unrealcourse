@@ -8,9 +8,7 @@
 #include "Tank.generated.h"
 
  
-class UTankTurret;
-class UTankBarrel;
-class AProjectile;
+ 
  
  
 UCLASS()
@@ -25,23 +23,17 @@ public:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
  
-	UFUNCTION(BlueprintCallable,Category=Setup)
-		void Fire();
+ 
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
 	void AimAt(FVector HitLocation);
-	UFUNCTION(BlueprintCallable,Category = Setup)
-		void SetBarrelRef(UTankBarrel* BarrelToSet);
-
  
-	UPROPERTY(EditAnywhere, Category = Setup)
-		TSubclassOf<AProjectile> BlueprintProjectile;
 
  
  
-
-	float GetLaunchSpeed() { return LaunchSpeed; }
+	UFUNCTION(BlueprintCallable,Category="Firing")
+		float GetLaunchSpeed() { return LaunchSpeed; }
  
 
 private:
@@ -49,14 +41,7 @@ private:
 	UPROPERTY(EditAnywhere, Category = Firing)
 		float LaunchSpeed = 8000; //TODO find sensible value
 
-
-	UPROPERTY(EditDefaultsOnly)
-		float ReloadFireTime = 3;
-
-	float LastFireTime = 0;
-	//Local barrel to spawn projectile
-	UTankBarrel* Barrel = nullptr;
-	
+ 
 
 	
 };

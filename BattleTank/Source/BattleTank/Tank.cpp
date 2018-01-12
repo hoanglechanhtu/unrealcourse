@@ -3,12 +3,7 @@
 #include "BattleTank.h"
  
 #include "Tank.h"
-#include "TankBarrel.h"
-#include "TankTurret.h"
  
- 
-
-#include "Projectile.h"
 // Sets default values
 ATank::ATank()
 {
@@ -36,25 +31,5 @@ void ATank::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 }
 
  
+  
  
-
-void ATank::SetBarrelRef(UTankBarrel* BarrelToSet) {
- 
-	Barrel = BarrelToSet;
-} 
-
- 
-
-void ATank::Fire() {
-	
-	bool bIsReady = (FPlatformTime::Seconds() - LastFireTime) > ReloadFireTime;
-	
-	if (bIsReady&&Barrel) {
-
-		//TODO spawn a projectile
-		auto Projectile = GetWorld()->SpawnActor<AProjectile>(BlueprintProjectile, Barrel->GetSocketLocation(FName("Projectile")), Barrel->GetSocketRotation(FName("Projectile")));
-
-		Projectile->LaunchProjectile(LaunchSpeed);
-		LastFireTime = FPlatformTime::Seconds();
-	}
-}
