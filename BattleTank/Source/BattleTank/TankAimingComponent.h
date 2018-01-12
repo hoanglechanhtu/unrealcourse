@@ -59,10 +59,11 @@ protected:
 	UTankBarrel* Barrel = nullptr;
 
 	UTankTurret* Turret = nullptr;
-
+private:
+	bool IsBarrelMoving();
  
 	 
-
+	FVector BarrelAimDirection;
 	
 		
 	

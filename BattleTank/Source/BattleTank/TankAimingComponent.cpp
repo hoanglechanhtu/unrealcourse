@@ -28,9 +28,12 @@ void UTankAimingComponent::TickComponent(float DeltaTime, enum ELevelTick TickTy
 	{
 		State = EFiringStatus::Reloading;
 	}
-	else {
+	else if(IsBarrelMoving()) {
 		State = EFiringStatus::Aiming;
 	
+	}
+	else {
+		State = EFiringStatus::Locked;
 	}
 
 }
@@ -93,6 +96,7 @@ void UTankAimingComponent::Fire(float LaunchSpeed) {
 
 void UTankAimingComponent::MoveBarrelToward(FVector AimDirection) {
 	// Workout difference bettween current barrel reaction and aimdirection
+	BarrelAimDirection = AimDirection;
 	if (!ensure(Barrel)) { 
 
 		 
@@ -112,7 +116,7 @@ void UTankAimingComponent::MoveBarrelToward(FVector AimDirection) {
 
 
 void UTankAimingComponent::RotatorTurret(FVector AimDirection) {
- 
+	BarrelAimDirection = AimDirection;
 	if (!ensure(Turret)) {
 	 
 		return;
@@ -125,5 +129,11 @@ void UTankAimingComponent::RotatorTurret(FVector AimDirection) {
 	auto DeltaRotator = AimRotator - CurrrentTurretRotator;
 
 	Turret->Rotator(DeltaRotator.Yaw);
+
+}
+
+bool UTankAimingComponent::IsBarrelMoving() {
+	if (!ensure(Barrel)) { return false; }
+	return !(Barrel->GetForwardVector().Equals(BarrelAimDirection,0.01));
 
 }
