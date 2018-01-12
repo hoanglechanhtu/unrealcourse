@@ -27,11 +27,6 @@ public:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
-	void AimAt(FVector HitLocation);
- 
-
- 
- 
 	UFUNCTION(BlueprintCallable,Category="Firing")
 		float GetLaunchSpeed() { return LaunchSpeed; }
  

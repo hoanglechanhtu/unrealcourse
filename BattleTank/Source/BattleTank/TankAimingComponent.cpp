@@ -17,9 +17,24 @@ UTankAimingComponent::UTankAimingComponent()
 	// ...
 }
 
+void UTankAimingComponent::BeginPlay() {
+	Super::BeginPlay();
+	LastFireTime = FPlatformTime::Seconds();
+}
  
+void UTankAimingComponent::TickComponent(float DeltaTime, enum ELevelTick TickType, FActorComponentTickFunction *ThisTickFunction) {
+	
+	if ((FPlatformTime::Seconds() - LastFireTime) < ReloadFireTime)
+	{
+		State = EFiringStatus::Reloading;
+	}
+	else {
+		State = EFiringStatus::Aiming;
+	
+	}
 
-
+}
+ 
 void UTankAimingComponent::AimAt(FVector HitLocation,float LaunchSpeed) {
 	if (!ensure(Barrel)) { 
 	 
@@ -65,8 +80,9 @@ void UTankAimingComponent::Fire(float LaunchSpeed) {
 
 	bool bIsReady = (FPlatformTime::Seconds() - LastFireTime) > ReloadFireTime;
 
-	if (bIsReady&&Barrel) {
-
+	if (State != EFiringStatus::Reloading) {
+		if (!ensure(Barrel)) { return; }
+		if (!ensure(BlueprintProjectile)) { return; }
 		//TODO spawn a projectile
 		auto Projectile = GetWorld()->SpawnActor<AProjectile>(BlueprintProjectile, Barrel->GetSocketLocation(FName("Projectile")), Barrel->GetSocketRotation(FName("Projectile")));
 
