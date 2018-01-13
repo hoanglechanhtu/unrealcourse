@@ -28,8 +28,9 @@ void UTankTrack::BeginPlay() {
 void UTankTrack::OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit) {
 	
 	DriveTrack();
-	ApplySidewayForce( );
+	ApplySidewayForce();
 	CurrentThrottle = 0.0f;
+	
 }
 void UTankTrack::ApplySidewayForce( ) {
 	//Calculate the slippage speed
@@ -47,13 +48,13 @@ void UTankTrack::ApplySidewayForce( ) {
  
 void UTankTrack::SetThrottle(float Throttle) {
 	 
-	CurrentThrottle += Throttle;
-	CurrentThrottle = FMath::Clamp<float>(CurrentThrottle, -1, +1);
+	 
+	CurrentThrottle = FMath::Clamp<float>(CurrentThrottle + Throttle, -1, 1);
 
 }
 
 void UTankTrack::DriveTrack() {
-
+	UE_LOG(LogTemp, Warning, TEXT("Current Throttle %f"),CurrentThrottle);
 	//  clamp actual throttle value so player cant over drive
 	auto ForceApplied = GetForwardVector()*CurrentThrottle*TrackMaxDrivingForce;
 	auto ForceLocation = GetComponentLocation();
