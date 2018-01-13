@@ -1,0 +1,10 @@
+	//Calculate the slippage speed
+	auto TankVelocity = GetComponentVelocity();
+	auto TankRightVector = GetRightVector(); 
+	auto SlippageSpeed = FVector::DotProduct(TankVelocity,TankRightVector);
+	//Work-out the required acceleration this frame to correct
+	auto CorrectionAcceleration = -(SlippageSpeed / DeltaTime)*GetRightVector();
+	// Calculate and apply sideways for (F=ma)
+	auto TankRoot = Cast<UPrimitiveComponent>(GetOwner()->GetRootComponent());
+	auto CorrectionForce = TankRoot->GetMass()*CorrectionAcceleration/2;
+	TankRoot->AddForce(CorrectionForce);
