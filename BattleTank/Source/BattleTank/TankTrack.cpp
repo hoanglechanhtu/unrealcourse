@@ -14,7 +14,7 @@ How can we deal with friction
 */
 
 UTankTrack::UTankTrack() {
-	PrimaryComponentTick.bCanEverTick = true; //TODO do we really need tick?
+	PrimaryComponentTick.bCanEverTick = false; //TODO do we really need tick?
 	
 }
 
@@ -24,31 +24,39 @@ void UTankTrack::BeginPlay() {
 	
 }
  
-void UTankTrack::TickComponent(float DeltaTime, enum ELevelTick TickType, FActorComponentTickFunction *ThisTickFunction) {
-	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
+
+void UTankTrack::OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit) {
+	
+	DriveTrack();
+	ApplySidewayForce( );
+	CurrentThrottle = 0.0f;
+}
+void UTankTrack::ApplySidewayForce( ) {
 	//Calculate the slippage speed
 	auto TankVelocity = GetComponentVelocity();
-	auto TankRightVector = GetRightVector(); 
-	auto SlippageSpeed = FVector::DotProduct(TankVelocity,TankRightVector);
+	auto TankRightVector = GetRightVector();
+	auto SlippageSpeed = FVector::DotProduct(TankVelocity, TankRightVector);
 	//Work-out the required acceleration this frame to correct
+	auto DeltaTime = GetWorld()->DeltaTimeSeconds;
 	auto CorrectionAcceleration = -(SlippageSpeed / DeltaTime)*GetRightVector();
 	// Calculate and apply sideways for (F=ma)
 	auto TankRoot = Cast<UPrimitiveComponent>(GetOwner()->GetRootComponent());
-	auto CorrectionForce = TankRoot->GetMass()*CorrectionAcceleration/2;
+	auto CorrectionForce = TankRoot->GetMass()*CorrectionAcceleration / 2;
 	TankRoot->AddForce(CorrectionForce);
-	
 }
+ 
 void UTankTrack::SetThrottle(float Throttle) {
-	auto TrackName = GetName();
-	
-	//TODO clamp actual throttle value so player cant over drive
-	auto ForceApplied = GetForwardVector()*Throttle*TrackMaxDrivingForce;
+	 
+	CurrentThrottle += Throttle;
+	CurrentThrottle = FMath::Clamp<float>(CurrentThrottle, -1, +1);
+
+}
+
+void UTankTrack::DriveTrack() {
+
+	//  clamp actual throttle value so player cant over drive
+	auto ForceApplied = GetForwardVector()*CurrentThrottle*TrackMaxDrivingForce;
 	auto ForceLocation = GetComponentLocation();
 	auto TankRoot = Cast<UPrimitiveComponent>(GetOwner()->GetRootComponent());
 	TankRoot->AddForceAtLocation(ForceApplied, ForceLocation);
-}
-
-void UTankTrack::OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit) {
-
-	UE_LOG(LogTemp, Warning, TEXT("Tank track hit ground"));
 }
