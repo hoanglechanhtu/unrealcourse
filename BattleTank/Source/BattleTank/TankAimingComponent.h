@@ -37,6 +37,7 @@ public:
 	
 	void AimAt(FVector HitLocation, float LaunchSpeed);
 
+	EFiringStatus GetFiringState() const;
 
 protected:
 	UPROPERTY(EditAnywhere, Category = Setup)

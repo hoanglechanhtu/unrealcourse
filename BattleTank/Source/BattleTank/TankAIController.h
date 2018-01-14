@@ -28,5 +28,6 @@ private:
 	 
 	 
 	//How close  ai tank get close to player
-	float AcceptanceRadius = 3000;
+	UPROPERTY(EditAnywhere)
+		float AcceptanceRadius = 3000;
 };

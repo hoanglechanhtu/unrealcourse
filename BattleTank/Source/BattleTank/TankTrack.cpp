@@ -54,7 +54,7 @@ void UTankTrack::SetThrottle(float Throttle) {
 }
 
 void UTankTrack::DriveTrack() {
-	UE_LOG(LogTemp, Warning, TEXT("Current Throttle %f"),CurrentThrottle);
+ 
 	//  clamp actual throttle value so player cant over drive
 	auto ForceApplied = GetForwardVector()*CurrentThrottle*TrackMaxDrivingForce;
 	auto ForceLocation = GetComponentLocation();
