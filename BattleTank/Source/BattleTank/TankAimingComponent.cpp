@@ -28,6 +28,9 @@ void UTankAimingComponent::TickComponent(float DeltaTime, enum ELevelTick TickTy
 	{
 		State = EFiringStatus::Reloading;
 	}
+	else if (RoundsLeft == 0) {
+		State = EFiringStatus::OutOfAmmo;
+	}
 	else if(IsBarrelMoving()) {
 		State = EFiringStatus::Aiming;
 	
@@ -83,7 +86,7 @@ void UTankAimingComponent::Fire(float LaunchSpeed) {
 
 	bool bIsReady = (FPlatformTime::Seconds() - LastFireTime) > ReloadFireTime;
 
-	if (State != EFiringStatus::Reloading) {
+	if (State != EFiringStatus::Reloading&& State != EFiringStatus::OutOfAmmo) {
 		if (!ensure(Barrel)) { return; }
 		if (!ensure(BlueprintProjectile)) { return; }
 		//TODO spawn a projectile
@@ -91,6 +94,7 @@ void UTankAimingComponent::Fire(float LaunchSpeed) {
 
 		Projectile->LaunchProjectile(LaunchSpeed);
 		LastFireTime = FPlatformTime::Seconds();
+		RoundsLeft--;
 	}
 }
 
@@ -144,4 +148,13 @@ bool UTankAimingComponent::IsBarrelMoving() {
 
 EFiringStatus UTankAimingComponent::GetFiringState() const{
 	return State;
+}
+
+
+
+
+int UTankAimingComponent::GetRoundsLeft() const {
+	return RoundsLeft;
+
+
 }

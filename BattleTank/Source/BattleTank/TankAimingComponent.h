@@ -9,7 +9,8 @@ UENUM()
 enum class EFiringStatus : uint8 {
 	Reloading,
 	Aiming,
-	Locked
+	Locked,
+	OutOfAmmo
 
 
 };
@@ -38,7 +39,9 @@ public:
 	void AimAt(FVector HitLocation, float LaunchSpeed);
 
 	EFiringStatus GetFiringState() const;
-
+	
+	UFUNCTION(BlueprintCallable, Category = Firing)
+	int GetRoundsLeft() const;
 protected:
 	UPROPERTY(EditAnywhere, Category = Setup)
 		TSubclassOf<AProjectile> BlueprintProjectile;
@@ -66,6 +69,7 @@ private:
 	 
 	FVector BarrelAimDirection;
 	
+	int RoundsLeft = 5;
 		
 	
 };
