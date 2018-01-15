@@ -131,7 +131,7 @@ void UTankAimingComponent::RotatorTurret(FVector AimDirection) {
 	FRotator AimRotator = AimDirection.Rotation();
 
 	auto DeltaRotator = AimRotator - CurrrentTurretRotator;
-	if(DeltaRotator.Yaw<180)
+	if(FMath::Abs(DeltaRotator.Yaw)<180)
 		Turret->Rotator(DeltaRotator.Yaw);
 	else
 		Turret->Rotator(-DeltaRotator.Yaw);
