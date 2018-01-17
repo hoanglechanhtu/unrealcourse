@@ -41,7 +41,7 @@ public:
 	EFiringStatus GetFiringState() const;
 	
 	UFUNCTION(BlueprintCallable, Category = Firing)
-	int GetRoundsLeft() const;
+		int32 GetRoundsLeft() const;
 protected:
 	UPROPERTY(EditAnywhere, Category = Setup)
 		TSubclassOf<AProjectile> BlueprintProjectile;
@@ -54,8 +54,10 @@ protected:
 		EFiringStatus State;
 
 	
-	UPROPERTY(EditDefaultsOnly)
+	UPROPERTY(EditDefaultsOnly,Category = "Firing")
 		float ReloadFireTime = 3;
+	UPROPERTY(EditDefaultsOnly, Category = "Firing")
+		int32 RoundsLeft = 5;
 
 	float LastFireTime = 0;
 	//Local barrel to spawn projectile
@@ -69,7 +71,5 @@ private:
 	 
 	FVector BarrelAimDirection;
 	
-	int RoundsLeft = 5;
-		
 	
 };
