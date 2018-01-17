@@ -32,6 +32,9 @@ protected:
 private:
 	UFUNCTION(BlueprintCallable)
 		void OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit);
+	UPROPERTY(EditAnywhere, Category = Firing)
+		float DestroyDelay = 0.5;
+	void OnTimerExpire();
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
