@@ -39,3 +39,10 @@ float ATank::TakeDamage(float DamageAmount, struct FDamageEvent const & DamageEv
 		UE_LOG(LogTemp, Warning, TEXT("Tank : %s die"),*GetName());
 	return ClampDamage;
 }
+
+
+float ATank::GetHealthPercent() const {
+	return (float)TankCurrentHP / (float)TankStartingHP;
+
+
+}

@@ -29,7 +29,9 @@ public:
 
 	UFUNCTION(BlueprintCallable,Category="Firing")
 		float GetLaunchSpeed() { return LaunchSpeed; }
- 
+	//return current health as a percentage of starting health between 0 and 1
+	UFUNCTION(BlueprintPure,Category= Health)
+		float GetHealthPercent() const ;
 
 private:
 
