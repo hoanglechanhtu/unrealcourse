@@ -36,7 +36,10 @@ private:
 	UPROPERTY(EditAnywhere, Category = Firing)
 		float LaunchSpeed = 8000; //TODO find sensible value
 
- 
+	virtual float TakeDamage(float DamageAmount, struct FDamageEvent const & DamageEvent, class AController* EventInstigator, AActor* DamageCauser) override;
 
-	
+	UPROPERTY(EditAnywhere, Category = Setup)
+		int32 TankStartingHP=100;
+	UPROPERTY(VisibleAnywhere, Category = Health)
+		int32 TankCurrentHP = TankStartingHP;
 };

@@ -35,6 +35,8 @@ private:
 	UPROPERTY(EditAnywhere, Category = Firing)
 		float DestroyDelay = 0.5;
 	void OnTimerExpire();
+	UPROPERTY(EditAnywhere, Category = Setup)
+		float ProjectileDamage = 10;
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
