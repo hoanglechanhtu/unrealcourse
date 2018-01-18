@@ -34,6 +34,9 @@ private:
 	bool GetLookDirection(FVector2D ScreenLocation, FVector& LookDirection) const;
 
 	bool GetLookVectorHitLocation(FVector LookDirection, FVector& HitLocation) const;
+	//On possesed tank deadth
+	UFUNCTION()
+		void OnTankDeadth();
 public:
 
 
@@ -48,4 +51,6 @@ public:
 
 	UPROPERTY(EditAnywhere)
 		float LineTraceRange= 1000000;
+
+	virtual void SetPawn(APawn* InPawn) override;
 };

@@ -9,7 +9,7 @@
 
  
  
- 
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FTank);
  
 UCLASS()
 class BATTLETANK_API ATank : public APawn
@@ -23,7 +23,9 @@ public:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
  
- 
+	//declare OnDead
+	FTank OnDeadth;
+
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 

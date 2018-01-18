@@ -6,6 +6,20 @@
 #include "TankPlayerController.h"
 
 
+void ATankPlayerController::SetPawn(APawn* InPawn) {
+	Super::SetPawn(InPawn);
+	if (InPawn) {
+		auto PossesedTank = Cast<ATank>(InPawn);
+		if (!ensure(PossesedTank)) { return; }
+		else {
+			//register to listen tank delegate on deadth
+			PossesedTank->OnDeadth.AddUniqueDynamic(this, &ATankPlayerController::OnTankDeadth);
+
+
+		}
+
+	}
+}
 
 void ATankPlayerController::BeginPlay() {
 	Super::BeginPlay();
@@ -25,7 +39,12 @@ void ATankPlayerController :: Tick(float DeltaTime) {
 	 
 }
 
- 
+
+void ATankPlayerController::OnTankDeadth() {
+	auto TankName = Cast<ATank>(GetPawn())->GetName();
+	UE_LOG(LogTemp, Warning, TEXT("%s:Someone die"),*TankName);
+
+}
 
 void ATankPlayerController::AimTowardCrosshair() {
 	 

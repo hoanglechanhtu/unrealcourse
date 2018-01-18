@@ -1,10 +1,26 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "BattleTank.h"
- 
+#include "Tank.h"
 #include "TankAimingComponent.h"
 #include "TankAIController.h"
 
+
+void ATankAIController::SetPawn(APawn* InPawn) {
+	Super::SetPawn(InPawn);
+	if (InPawn) {
+		auto PossesedTank = Cast<ATank>(InPawn);
+		if (!ensure(PossesedTank)) { return; }
+		else {
+			//register to listen tank delegate on deadth
+			PossesedTank->OnDeadth.AddUniqueDynamic(this, &ATankAIController::OnTankDeadth);
+
+
+		}
+	}
+
+
+}
 
 void ATankAIController::BeginPlay() {
 	Super::BeginPlay();
@@ -36,4 +52,8 @@ void ATankAIController::Tick(float DeltaTime) {
 }
  
 
+void ATankAIController::OnTankDeadth() {
+	auto TankName = Cast<ATank>(GetPawn())->GetName();
+	UE_LOG(LogTemp, Warning, TEXT("%s:Someone die"), *TankName);
+}
  
